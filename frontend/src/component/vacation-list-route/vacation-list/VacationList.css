@@ -1,0 +1,118 @@
+.vacationCards {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 30px;
+    justify-content: left;
+}
+
+.VacationList {
+    text-align: center;
+    margin: 20px 0 100px 20px;
+}
+
+.pagination {
+    display: flex;
+    justify-content: center;
+    width: fit-content;
+    margin: 2px auto 0 auto;
+    gap: 20px;
+}
+
+.pagination button {
+    border-radius: 1px;
+    width: 40px;
+    flex: none;
+    background-color: #323252;
+    color: white;
+    border: none;
+}
+
+.pagination button.active {
+    cursor: default;
+}
+
+.p-no-vacations {
+    text-align: center;
+    color: red;
+    font-weight: bolder;
+    font-size: 30px;
+}
+
+.radio-buttons {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 50px;
+    padding: 10px 0 30px;
+}
+
+.radio-buttons div {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.radio-buttons input {
+    width: 16px;
+    height: 16px;
+    cursor: pointer;
+    color: #323252;
+}
+
+.radio-buttons span {
+    color: #323252;
+    white-space: nowrap;
+    font-weight: bold;
+}
+
+.radio-buttons label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    width: fit-content;
+}
+
+.radio-buttons button {
+    /*padding: 6px 16px;*/
+    background-color: #f5c518;
+    border: none;
+    border-radius: 6px;
+    font-weight: bold;
+    cursor: pointer;
+    width: fit-content;
+    flex-shrink: 0;
+    margin: 0;
+}
+
+.radio-buttons button:disabled {
+    opacity: 0.4;
+    cursor: default;
+}
+
+@media (max-width: 768px) {
+    .VacationList {
+        margin: 10px;
+    }
+
+    .vacationCards {
+        gap: 16px;
+        justify-content: center;
+    }
+
+    .radio-buttons {
+        gap: 8px;
+        padding: 10px 0 20px;
+    }
+    .radio-buttons label{
+        font-size: 10px;
+        font-weight: bold;
+        margin: 0;
+    }
+
+    .radio-buttons button{
+        font-size: 10px;
+        font-weight: bold;
+        height: 20px;
+    }
+}

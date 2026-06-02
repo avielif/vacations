@@ -1,0 +1,126 @@
+.Header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    padding: 0 20px 0 20px;
+}
+
+.Header p {
+    margin: 0;
+}
+
+.links {
+    display: flex;
+    gap: 18px;
+}
+
+a {
+    text-decoration: none;
+}
+
+.header-left {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    height: 100%;
+}
+
+.header-left button {
+    width: 70px;
+    margin: 0;
+}
+
+.home-icon {
+    font-size: 20px;
+    color: white;
+    cursor: pointer;
+    transition: color 0.2s;
+}
+
+.home-icon:hover {
+    color: #F9C74F;
+}
+
+/*.button-new-vacation {*/
+/*    width: 150px;*/
+/*    margin: 0;*/
+/*}*/
+
+.menu {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+    height: 100%;
+}
+
+.menu button {
+    margin: 0;
+    width: 135px;
+    background-color: transparent;
+    color: #F9C74F;
+    border: 1px solid #F9C74F;
+    border-radius: 20px;
+    padding: 6px 14px;
+    font-weight: normal;
+    cursor: pointer;
+}
+
+.header-left-menu {
+    display: flex;
+    align-items: center;
+    gap: 40px;
+
+}
+
+@media (max-width: 768px) {
+    .Header {
+        flex-direction: row;        /* keep logo and content side by side */
+        align-items: flex-start;
+        flex-wrap: nowrap;
+        padding: 10px 14px 10px 10px;
+    }
+
+    .header-left-menu {
+        flex: 1;                    /* takes all available width */
+        /*flex-direction: column;*/
+        gap: 8px;
+        flex-wrap: wrap;
+    }
+
+    .header-left {
+        flex-wrap: wrap;
+        gap: 8px;
+    }
+
+    .menu {
+        gap: 8px;
+        flex-wrap: nowrap;
+        overflow-x: auto;
+    }
+
+    .menu button {
+        width: auto;
+        padding: 6px 10px;
+    }
+
+    .header-left button {
+        width: auto;
+    }
+
+    .button-new-vacation {
+        /*width: auto;*/
+    }
+
+    .Header > img {
+        width: 55px;
+        height: 55px;
+        align-self: flex-start;    /* pins logo to top-right */
+        flex-shrink: 0;
+    }
+
+    .menu a, .menu button {
+        font-size: 13px;
+        white-space: nowrap;
+    }
+}

@@ -1,0 +1,24 @@
+.Main {
+    overflow: scroll;
+}
+
+.welcome-text {
+    position: absolute;
+    top: 80px;
+    right: 0;
+    transform: translateX(-30%);
+    text-align: center;
+    color: #F9C74F;
+    text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.7);
+    z-index: 1;
+}
+
+.welcome-text h1 {
+    font-size: 48px;
+    margin-bottom: 10px;
+}
+
+.welcome-text p {
+    font-size: 25px;
+    color: white;
+}

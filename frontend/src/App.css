@@ -1,0 +1,46 @@
+.App {
+  text-align: center;
+  min-height: 100vh;
+  overflow: hidden;
+  position: relative; /* ← required */
+}
+
+.App::before {
+  content: '';
+  position: absolute;
+  inset: 0; /* covers the full .App area */
+  background-image: url('./assets/background-photo3.jpg');
+  background-size: cover;
+  background-position: center 80%;
+  background-repeat: no-repeat;
+  filter: brightness(0.9); /* ← adjust this value */
+  z-index: 0; /* ← pushes it behind all content */
+}
+
+.App > * {
+  position: relative;
+  z-index: 1;
+}
+
+header {
+  width: 100%;
+  height: 70px;
+  background-color: #323252;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);
+}
+
+header img {
+  height: 70px;
+  width: auto;
+  object-fit: contain;
+}
+
+@media (max-width: 768px) {
+  header {
+    height: auto;
+    padding: 10px 0;
+  }
+}

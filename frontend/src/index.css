@@ -1,0 +1,179 @@
+/* Page background */
+body, html {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background-color: #F4FAFD;
+  /*overflow-y: hidden;*/
+}
+
+/* Form container */
+form {
+  width: 380px;
+  max-width: 400px;
+  margin: 20px auto;
+  padding: 14px 18px 20px;
+  background-color: #323252;
+  border: 1px solid #d6d6d6;
+  border-radius: 12px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+  overflow-x: hidden;
+}
+
+form::-webkit-scrollbar {
+  display: none;
+}
+
+/* Inner wrapper */
+form > div {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Title */
+h2 {
+  text-align: center;
+  color: white;
+  font-size: 22px;
+  font-family: Corbel;
+  margin-bottom: 16px;
+}
+
+/* Labels */
+label {
+  display: block;
+  width: 100%;
+  text-align: left;
+  font-size: 16px;
+  font-family: Corbel;
+  color: whitesmoke;
+  margin-bottom: 3px;
+  margin-top: 8px;
+  padding-left: 30px;
+}
+
+/* Input fields */
+input, textarea {
+  height: 34px;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 8px;
+  font-size: 15px;
+  font-family: Corbel;
+  outline: none;
+  background-color: #5F5C7D;
+  width: 80%;
+  margin: 0 auto; /* Center input */
+  display: block;  /* Needed for margin auto to work */
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.06);
+  transition: background-color 0.2s, box-shadow 0.2s;
+  color: white;
+}
+
+/* Focus effect */
+input:focus {
+  border-color: #0d8ae5;
+}
+
+/* Button */
+button {
+  margin: 50px auto 0 auto; /* Top margin + center horizontally */
+  height: 36px;
+  background-color: #F9C74F;
+  color: black;
+  border: none;
+  border-radius: 10px;
+  font-size: 17px;
+  font-family: Corbel;
+  font-weight: bold;
+  cursor: pointer;
+  width: 45%;
+  display: block; /* Needed for margin auto to work */
+}
+
+/* Paragraph text */
+p {
+  text-align: center;
+  color: whitesmoke;
+  margin-top: 25px;
+  margin-bottom: 5px;
+  font-size: 18px;
+  font-family: Corbel;
+}
+
+/* Link */
+a {
+  text-align: center;
+  color: ghostwhite;
+  font-size: 18px;
+  font-family: Corbel;
+  text-decoration: underline;
+}
+
+/* Error messages */
+p.error {
+  color: indianred;
+  font-size: 14px;
+  margin-top: 5px;
+  margin-bottom: 0;
+  text-align: left;
+  padding-left: 25px;
+}
+
+textarea {
+  height: 70px;
+}
+
+form .form-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 16px;
+}
+
+.p-dont {
+  text-align: center;
+  margin-top: 30px;
+}
+
+.p-loading {
+  text-align: center;
+  margin-top: 30px;
+  color: #323252;
+  font-size: 30px;
+  font-weight: bold;
+}
+
+form img {
+  width: 320px;
+  max-height: 130px;
+  object-fit: cover;
+  display: block;
+  margin: 0 0 15px 30px;
+}
+
+.swal2-container button {
+  margin: initial;
+  width: auto;
+  height: auto;
+  display: inline-block;
+  background-color: #323252;
+}
+
+.swal2-container button:hover {
+  background-color: #323252;
+}
+
+@media (max-width: 480px) {
+  label {
+    padding-left: 12px;
+  }
+
+  p.error {
+    padding-left: 12px;
+  }
+
+  button {
+    width: 70%;
+    margin-top: 20px;
+  }
+}
