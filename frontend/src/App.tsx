@@ -1,9 +1,10 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import './App.css';
 import Routing from "./utils/Routing";
 import Header from "./component/layout/header/Header";
 import axios from "axios";
 import { authStore, AuthActionType } from "./state/auth-state";
+import {authService} from "./services/auth-service";
 
 axios.interceptors.response.use(
     response => response,
@@ -21,6 +22,10 @@ axios.interceptors.response.use(
 );
 
 function App() {
+    useEffect(() => {
+        authService.init();
+    }, []);
+
   return (
     <div className="App">
         <header>

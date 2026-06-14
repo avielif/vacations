@@ -1,6 +1,7 @@
 import {User} from "../models/user";
 import {jwtDecode} from "jwt-decode";
 import {createStore} from "redux";
+import {vacationSocketService} from "../services/vacation-socket-service";
 
 interface UserWrapper {
     user: User;

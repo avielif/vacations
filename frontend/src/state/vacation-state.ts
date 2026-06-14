@@ -1,9 +1,14 @@
 import {createStore} from "redux";
 import {Vacation} from "../models/vacation";
+import {vacationSocketService} from "../services/vacation-socket-service";
 
 export class VacationState {
     vacationList: Vacation[] = [];
     vacationCount: number = 0;
+
+    // constructor() {
+    //     vacationSocketService.vacationAdded();
+    // }
 }
 
 export enum VacationActionType{
@@ -30,9 +35,16 @@ export function vacationReducer(vacationState: VacationState = new VacationState
         case VacationActionType.GetVacationList:
             newState.vacationList = action.payload;
             break;
-        case VacationActionType.AddVacation:
+        case VacationActionType.AddVacation: {
             newState.vacationList.push(action.payload);
+            const parseDate = (d: string) => {
+                const [day, month, year] = String(d).split("/");
+                return new Date(+year, +month - 1, +day).getTime();
+            };
+            newState.vacationList.sort((a, b) => parseDate(String(a.startDate)) - parseDate(String(b.startDate)));
+            newState.vacationList = newState.vacationList.slice(0, 10);
             break;
+        }
         case VacationActionType.UpdateVacation:
             const indexToUpdate = newState.vacationList.findIndex((item) => item.id === action.payload.id);
             newState.vacationList[indexToUpdate] = action.payload;

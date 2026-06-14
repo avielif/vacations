@@ -5,6 +5,7 @@ import {errorMiddleware} from "./middleware/error-middleware";
 import {authController} from "./controllers/auth-controller";
 import {vacationController} from "./controllers/vacation-controller";
 import {followerController} from "./controllers/follower-controller";
+import {socketService} from "./services/socket-service";
 
 class App {
 
@@ -21,7 +22,8 @@ class App {
 
         server.use(errorMiddleware.routeNotFound);
         server.use(errorMiddleware.catchAll);
-        server.listen(4000, () => console.log("Server started ok - port 4000"));
+        const httpServer = server.listen(4000, () => console.log("Server started ok - port 4000"));
+        socketService.init(httpServer);
     }
 
 }

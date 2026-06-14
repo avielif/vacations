@@ -4,6 +4,7 @@ import {appConfig} from "../utils/app-config";
 import {UserCredentials} from "../models/user-credentials";
 import {AuthActionType, authStore} from "../state/auth-state";
 import {RoleId} from "../models/enums";
+import {vacationSocketService} from "./vacation-socket-service";
 
 class AuthService {
 
@@ -23,10 +24,19 @@ class AuthService {
         try {
             const response = await axios.post(appConfig.apiAddress + "auth/login", userCredentials);
             authStore.dispatch({type: AuthActionType.Login, payload: response.data.token});
+            vacationSocketService.vacationAdded();
+            vacationSocketService.vacationDeleted();
         }
         catch(err) {
             const myErr = err as AxiosError<{ error: string }>;
             throw new Error(myErr.response?.data?.error ?? "Login failed");
+        }
+    }
+
+    public init(): void {
+        if (authStore.getState().token) {
+            vacationSocketService.vacationAdded();
+            vacationSocketService.vacationDeleted();
         }
     }
 

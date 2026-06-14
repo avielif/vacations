@@ -5,6 +5,7 @@ import {ResourceNotFound} from "../models/client-error";
 import {appConfig} from "../utils/app-config";
 import fs from "fs";
 import path from "path";
+import {vacationSocketService} from "./vacation-socket-service";
 
 interface CountRow {
     numberOfVacations: number;
@@ -18,6 +19,15 @@ class VacationService {
         const result = await dal.execute(sql, [vacation.destination, vacation.description, vacation.startDate, vacation.endDate, vacation.price, vacation.imageName]) as ResultSetHeader;
         vacation = await this.getSingleVacation(result.insertId);
         vacation.numberOfFollowers = 0;
+
+        const toDisplay = (d: string) => d.split("-").reverse().join("/");
+        const vacationForSocket = {
+            ...vacation,
+            startDate: toDisplay(String(vacation.startDate)),
+            endDate: toDisplay(String(vacation.endDate))
+        } as unknown as Vacation;
+        vacationSocketService.sendVacation(vacationForSocket);
+
         return vacation;
     }
 
@@ -81,6 +91,7 @@ class VacationService {
         if (result.affectedRows === 0) {
             throw new ResourceNotFound(id);
         }
+        vacationSocketService.deleteVacation(id);
     }
 
     public async getFollowedVacationsListByUserId(userId: number, offset: number): Promise<Vacation[]> {

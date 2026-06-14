@@ -16,7 +16,9 @@ class VacationService {
         formData.append("image", vacation.image![0]);
         try {
             const response = await axios.post<Vacation>(appConfig.apiAddress + "vacation", formData, {headers: {Authorization: "Bearer " + authStore.getState().token}});
-            vacationStore.dispatch({type: VacationActionType.AddVacation, payload: response.data});
+            if (!vacationStore.getState().vacationList.find(vacation => vacation.id === response.data.id)) {
+                vacationStore.dispatch({type: VacationActionType.AddVacation, payload: response.data});
+            }
             return response.data;
         }
 
