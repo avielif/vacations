@@ -73,6 +73,16 @@ class VacationService {
         if (result.affectedRows === 0) {
             throw new ResourceNotFound(id);
         }
+
+        const toDisplay = (d: string) => d.split("-").reverse().join("/");
+        const vacationForSocket = {
+            ...vacation,
+            image: vacation.imageName,
+            startDate: toDisplay(String(vacation.startDate)),
+            endDate: toDisplay(String(vacation.endDate))
+        } as unknown as Vacation;
+        vacationSocketService.updateVacation(vacationForSocket);
+
     }
 
     public async deleteVacation(id: number): Promise<void> {

@@ -8,7 +8,7 @@ class VacationSocketService {
         socketService.connect();
         socketService.socket.off("addedVacation"); // prevent duplicate listeners
         socketService.socket.on("addedVacation", (vacation) => {
-            vacationStore.dispatch({type: VacationActionType.AddVacation, payload: vacation});
+            // vacationStore.dispatch({type: VacationActionType.AddVacation, payload: vacation});
         })
     };
 
@@ -16,7 +16,15 @@ class VacationSocketService {
         socketService.connect();
         socketService.socket.off("deletedVacation"); // prevent duplicate listeners
         socketService.socket.on("deletedVacation", (id) => {
-            vacationStore.dispatch({type: VacationActionType.DeleteVacation, payload: id});
+            // vacationStore.dispatch({type: VacationActionType.DeleteVacation, payload: id});
+        })
+    };
+
+    public vacationUpdated() {
+        socketService.connect();
+        socketService.socket.off("updatedVacation"); // prevent duplicate listeners
+        socketService.socket.on("updatedVacation", (vacation) => {
+            // vacationStore.dispatch({type: VacationActionType.UpdateVacation, payload: vacation});
         })
     };
 

@@ -11,6 +11,8 @@ class SocketService {
             this._socket = io(appConfig.serverAddress, {
                 query: {
                     firstName: authStore.getState().user?.firstName,
+                    lastName: authStore.getState().user?.lastName,
+                    email: authStore.getState().user?.email,
                 }
             });
         }
@@ -18,6 +20,11 @@ class SocketService {
 
     public get socket () {
         return this._socket;
+    }
+
+    public disconnect(): void {
+        this.socket?.disconnect();
+        this._socket = null!;
     }
 
 }

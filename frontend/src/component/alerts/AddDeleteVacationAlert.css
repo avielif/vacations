@@ -1,0 +1,11 @@
+.swal-confirm-btn {
+    min-width: 120px;
+    white-space: nowrap;
+    background-color: #323252;
+}
+
+.swal2-actions {
+    flex-direction: row !important;
+    flex-wrap: nowrap !important;
+    gap: 12px;
+}

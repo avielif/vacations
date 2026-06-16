@@ -92,6 +92,12 @@ function VacationList(): JSX.Element {
 
     }, [userId, location.state]);
 
+    // useEffect(() => {
+    //     if (location.state?.reset) {
+    //         window.scrollTo({ top: 0, behavior: "smooth" });
+    //     }
+    // }, [location.state]);
+
     async function getVacationList(offset: number, forceFetch: boolean) {
         try {
             vacationList = await vacationService.getVacationList(offset, forceFetch);
@@ -126,6 +132,7 @@ function VacationList(): JSX.Element {
         const offset = (pageNumber-1) * pageLimit;
         await getVacationList(offset, true);
         navigate("/vacations-list?page=" + pageNumber);
+        // navigate("/vacations-list?page=" + pageNumber, { state: { reset: location.state?.reset } });
     }
 
     async function getFollowerListByUserId(userId: number) {

@@ -5,6 +5,7 @@ import Header from "./component/layout/header/Header";
 import axios from "axios";
 import { authStore, AuthActionType } from "./state/auth-state";
 import {authService} from "./services/auth-service";
+import VacationPreview from "./component/vacation-preview/VacationPreview";
 
 axios.interceptors.response.use(
     response => response,
@@ -33,6 +34,7 @@ function App() {
         </header>
             <main>
                 <Routing />
+                <VacationPreview />
             </main>
     </div>
   );

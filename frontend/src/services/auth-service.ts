@@ -37,6 +37,7 @@ class AuthService {
         if (authStore.getState().token) {
             vacationSocketService.vacationAdded();
             vacationSocketService.vacationDeleted();
+            vacationSocketService.vacationUpdated();
         }
     }
 

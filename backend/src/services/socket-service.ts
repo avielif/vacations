@@ -10,8 +10,9 @@ class SocketService {
         this._socketServer = new SocketServer(httpServer, options);
         this._socketServer.on("connection", (socket) => {
             const firstName = socket.handshake.query.firstName as string;
+            const lastName = socket.handshake.query.lastName as string;
             socket.join(firstName);
-            console.log("Client " + firstName + " has been connected!");
+            console.log("Client " + firstName + " " + lastName + " has been connected!");
         })
 
     }
