@@ -4,9 +4,9 @@ import {socketService} from "./socket-service";
 
 class VacationSocketService {
 
-    public sendVacation(vacation: Vacation, adminId: number) {
+    public sendVacation(vacation: Vacation) {
         if (socketService.socketServer) {
-            socketService.socketServer.emit("addedVacation", { vacation, adminId });
+            socketService.socketServer.emit("addedVacation", vacation);
         }
     }
 
@@ -16,9 +16,9 @@ class VacationSocketService {
         }
     }
 
-    public updateVacation(vacation: Vacation, adminId: number) {
+    public updateVacation(vacation: Vacation) {
         if (socketService.socketServer) {
-            socketService.socketServer.emit("updatedVacation", { vacation, adminId });
+            socketService.socketServer.emit("updatedVacation", vacation);
         }
     }
 

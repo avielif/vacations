@@ -4,6 +4,7 @@ import { socketService } from "./socket-service";
 import { Vacation } from "../models/vacation";
 import {PreviewActionType, previewStore} from "../state/vacation-preview-state";
 import { useNavigate } from "react-router-dom";
+import {authStore} from "../state/auth-state";
 
 export function useVacationSocket(): void {
 
@@ -56,7 +57,8 @@ export function useVacationSocket(): void {
             });
         });
 
-        socket.on("deletedVacation", (id: number) => {
+        socket.on("deletedVacation", ({ id, adminId }: { id: number, adminId: number }) => {
+            if (authStore.getState().user?.id === adminId) return;
             // No "View" button for delete — vacation is gone, no data to show
             Swal.fire({
                 title: "Vacation Removed",

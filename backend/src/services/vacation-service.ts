@@ -85,7 +85,7 @@ class VacationService {
 
     }
 
-    public async deleteVacation(id: number): Promise<void> {
+    public async deleteVacation(id: number, adminId: number): Promise<void> {
         // deleting existing image before delete
         const rows = await dal.execute("select imageName from vacation where id = ?", [id]) as Vacation[];
         const existingImageName = rows[0]?.imageName;
@@ -101,7 +101,7 @@ class VacationService {
         if (result.affectedRows === 0) {
             throw new ResourceNotFound(id);
         }
-        vacationSocketService.deleteVacation(id);
+        vacationSocketService.deleteVacation(id, adminId);
     }
 
     public async getFollowedVacationsListByUserId(userId: number, offset: number): Promise<Vacation[]> {

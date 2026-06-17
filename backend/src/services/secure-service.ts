@@ -42,7 +42,7 @@ class SecureService {
     }
 
     public getAdminId(token: string): number {
-        const container = jwt.decode(token) as { user: User };
+        const container = jwt.decode(token) as {user: User};
         return container.user.id!;
     }
 

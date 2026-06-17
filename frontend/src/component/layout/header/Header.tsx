@@ -53,6 +53,7 @@ function Header (): JSX.Element {
                             <>
                                 <NavLink to="/vacation">Add New Vacation</NavLink>
                                 <NavLink to="/vacations-report">Vacations Report</NavLink>
+                                <NavLink to="/vacations-report">Connected Users</NavLink>
                                 <CsvDownloader
                                     filename="Vacations Followers Report"
                                     wrapColumnChar='"'
