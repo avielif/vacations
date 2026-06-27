@@ -8,10 +8,8 @@ import {authStore} from "../state/auth-state";
 
 export function useVacationSocket(): void {
 
-    const navigate = useNavigate();
-
     useEffect(() => {
-        socketService.connect();
+        // socketService.connect();
         const socket = socketService.socket;
         // console.log("Socket connected:", socket.id, socket.connected);
         socket.on("connect", () => console.log("Socket connected:", socket.id));
@@ -31,9 +29,6 @@ export function useVacationSocket(): void {
                 if (result.isConfirmed) {
                     previewStore.dispatch({type: PreviewActionType.Show, payload: vacation});
                 }
-                // else if (result.isDismissed) {
-                    // navigate("/vacations-list?page=1", { state: { reset: true } });
-                // }
             });
         });
 
@@ -51,15 +46,11 @@ export function useVacationSocket(): void {
                 if (result.isConfirmed) {
                     previewStore.dispatch({type: PreviewActionType.Show, payload: vacation});
                 }
-                // else if (result.isDismissed) {
-                    // navigate("/vacations-list?page=1", { state: { reset: true } });
-                // }
             });
         });
 
         socket.on("deletedVacation", ({ id, adminId }: { id: number, adminId: number }) => {
             if (authStore.getState().user?.id === adminId) return;
-            // No "View" button for delete — vacation is gone, no data to show
             Swal.fire({
                 title: "Vacation Removed",
                 text: "A vacation has been deleted.",
@@ -67,11 +58,6 @@ export function useVacationSocket(): void {
                 confirmButtonText: "OK",
                 returnFocus: false,
             });
-            //     .then((result) => {
-            //     if (result.isConfirmed) {
-            //         // navigate("/vacations-list?page=1", { state: { reset: true } });
-            //     }
-            // });
         });
 
         return () => {

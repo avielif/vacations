@@ -5,6 +5,8 @@ import {UserCredentials} from "../models/user-credentials";
 import {AuthActionType, authStore} from "../state/auth-state";
 import {RoleId} from "../models/enums";
 import {vacationSocketService} from "./vacation-socket-service";
+import {userSocketService} from "./user-socket-service";
+import {socketService} from "./socket-service";
 
 class AuthService {
 
@@ -13,6 +15,7 @@ class AuthService {
             user.roleId = RoleId.User;
             const response = await axios.post(appConfig.apiAddress + "auth/register", user);
             authStore.dispatch({type: AuthActionType.Register, payload: response.data.token});
+            // socketService.connect();
         }
         catch(err) {
             const myErr = err as AxiosError<{ error: string }>;
@@ -24,8 +27,9 @@ class AuthService {
         try {
             const response = await axios.post(appConfig.apiAddress + "auth/login", userCredentials);
             authStore.dispatch({type: AuthActionType.Login, payload: response.data.token});
-            vacationSocketService.vacationAdded();
-            vacationSocketService.vacationDeleted();
+            // socketService.connect();
+            // vacationSocketService.vacationAdded();
+            // vacationSocketService.vacationDeleted();
         }
         catch(err) {
             const myErr = err as AxiosError<{ error: string }>;
@@ -33,13 +37,13 @@ class AuthService {
         }
     }
 
-    public init(): void {
-        if (authStore.getState().token) {
-            vacationSocketService.vacationAdded();
-            vacationSocketService.vacationDeleted();
-            vacationSocketService.vacationUpdated();
-        }
-    }
+    // public init(): void {
+    //     if (authStore.getState().token) {
+    //         vacationSocketService.vacationAdded();
+    //         vacationSocketService.vacationDeleted();
+    //         vacationSocketService.vacationUpdated();
+    //     }
+    // }
 
 }
 

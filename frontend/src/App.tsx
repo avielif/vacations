@@ -6,6 +6,8 @@ import axios from "axios";
 import { authStore, AuthActionType } from "./state/auth-state";
 import {authService} from "./services/auth-service";
 import VacationPreview from "./component/vacation-preview/VacationPreview";
+import {socketService} from "./services/socket-service";
+import {userSocketService} from "./services/user-socket-service";
 
 axios.interceptors.response.use(
     response => response,
@@ -23,8 +25,11 @@ axios.interceptors.response.use(
 );
 
 function App() {
+
     useEffect(() => {
-        authService.init();
+        socketService.connect();
+        userSocketService.usersConnected();
+        userSocketService.getUsersConnected();
     }, []);
 
   return (

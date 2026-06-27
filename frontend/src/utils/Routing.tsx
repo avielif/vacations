@@ -8,6 +8,7 @@ import VacationListRoute from "../component/vacation-list-route/VacationListRout
 import PrivateRoute from "../component/private-route/PrivateRoute";
 import {RoleId} from "../models/enums";
 import Report from "../component/Report/Report";
+import ConnectedUsers from "../component/connected-users/ConnectedUsers";
 
 function Routing(): JSX.Element {
     return (
@@ -17,6 +18,7 @@ function Routing(): JSX.Element {
             <Route path="/vacation/:id?" element={<PrivateRoute permissionIdList={[RoleId.Admin]} child={<VacationForm />}/>}/>
             <Route path="/vacations-list" element={<PrivateRoute permissionIdList={[RoleId.Admin, RoleId.User]} child={<VacationListRoute />}/>}/>
             <Route path="/vacations-report" element={<PrivateRoute permissionIdList={[RoleId.Admin]} child={<Report />}/>}/>
+            <Route path="/connected-users" element={<PrivateRoute permissionIdList={[RoleId.Admin]} child={<ConnectedUsers />}/>}/>
             <Route path="/" element={<Main />}/>
             <Route path="*" element={<Main />}/>
         </Routes>

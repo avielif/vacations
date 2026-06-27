@@ -11,7 +11,6 @@ import {followerService} from "../../../services/follower-service";
 import {vacationService} from "../../../services/vacation-service";
 import CsvDownloader from "react-csv-downloader";
 
-
 function Header (): JSX.Element {
 
     const navigate = useNavigate();
@@ -53,7 +52,7 @@ function Header (): JSX.Element {
                             <>
                                 <NavLink to="/vacation">Add New Vacation</NavLink>
                                 <NavLink to="/vacations-report">Vacations Report</NavLink>
-                                <NavLink to="/vacations-report">Connected Users</NavLink>
+                                <NavLink to="/connected-users">Connected Users</NavLink>
                                 <CsvDownloader
                                     filename="Vacations Followers Report"
                                     wrapColumnChar='"'
