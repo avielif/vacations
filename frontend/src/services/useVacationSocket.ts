@@ -5,6 +5,8 @@ import { Vacation } from "../models/vacation";
 import {PreviewActionType, previewStore} from "../state/vacation-preview-state";
 import { useNavigate } from "react-router-dom";
 import {authStore} from "../state/auth-state";
+import {userSocketService} from "./user-socket-service";
+import {UserActionType, userStore} from "../state/user-state";
 
 export function useVacationSocket(): void {
 
@@ -60,11 +62,24 @@ export function useVacationSocket(): void {
             });
         });
 
+        // userSocketService.usersConnected();
+
+        // socketService.socket.on("connectUser", (user) => {
+        //     userStore.dispatch({type: UserActionType.AddUser, payload: user});
+        // })
+        //
+        // socketService.socket.on("disconnectUser", (user) => {
+        //     userStore.dispatch({type: UserActionType.RemoveUser, payload: user});
+        // })
+        //
+        // socketService.socket.emit("getUsersConnected");
+
         return () => {
+            // socket.off("connectUser");
+            // socket.off("disconnectUser");
             socket.off("addedVacation");
             socket.off("updatedVacation");
             socket.off("deletedVacation");
-            socketService.disconnect();
         };
     }, []);
 }

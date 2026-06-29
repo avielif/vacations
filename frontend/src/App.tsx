@@ -27,9 +27,24 @@ axios.interceptors.response.use(
 function App() {
 
     useEffect(() => {
-        socketService.connect();
-        userSocketService.usersConnected();
-        userSocketService.getUsersConnected();
+        // Connect immediately if already logged in (after refresh)
+        if (authStore.getState().token) {
+            socketService.connect();
+            userSocketService.usersConnected();
+        }
+
+        // Connect when user logs in
+        const unsubscribe = authStore.subscribe(() => {
+            const token = authStore.getState().token;
+            if (token && !socketService.socket) {
+                socketService.connect();
+                userSocketService.usersConnected();
+            }
+            if (!token) {
+                socketService.disconnect();
+            }
+        });
+        return () => unsubscribe();
     }, []);
 
   return (

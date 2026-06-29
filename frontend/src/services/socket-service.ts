@@ -13,6 +13,10 @@ class SocketService {
                     firstName: authStore.getState().user?.firstName,
                     lastName: authStore.getState().user?.lastName,
                     email: authStore.getState().user?.email,
+                    roleId: authStore.getState().user?.roleId,
+                },
+                auth: {
+                    token: authStore.getState().token,
                 }
             });
         }

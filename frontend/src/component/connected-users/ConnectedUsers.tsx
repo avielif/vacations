@@ -2,15 +2,21 @@ import {JSX, useEffect, useState} from "react";
 import {userStore} from "../../state/user-state";
 import {User} from "../../models/user";
 import './ConnectedUsers.css'
+import {userSocketService} from "../../services/user-socket-service";
+import {socketService} from "../../services/socket-service";
 
 function ConnectedUsers(): JSX.Element {
 
-    const [users, setUsers] = useState<User[]>([]);
+    const [users, setUsers] = useState<User[]>(userStore.getState().userList);
+    console.log(userStore.getState().userList);
 
     useEffect(() => {
-        userStore.subscribe(()=> {
+        socketService.connect(); // ensure socket exists
+        userSocketService.getUsersConnected();
+        const unsubscribe = userStore.subscribe(()=> {
             setUsers(userStore.getState().userList);
-        })
+        });
+        return () => unsubscribe();
     }, [])
 
     return (
@@ -19,7 +25,7 @@ function ConnectedUsers(): JSX.Element {
             <table className="users-connected-table">
                 <thead>
                     <tr>
-                        <th>Serial number</th>
+                        <th>#</th>
                         <th>User Name</th>
                         <th>User Email</th>
                         <th>Role</th>

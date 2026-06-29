@@ -6,6 +6,7 @@ class UserSocketService {
 
     public usersConnected() {
         socketService.socket.on("connectUser", (user) => {
+            console.log("connectUser event received:", user);
             userStore.dispatch({type: UserActionType.AddUser, payload: user});
         })
 
@@ -15,7 +16,17 @@ class UserSocketService {
     }
 
     public getUsersConnected() {
-        socketService.socket.emit("getUsersConnected");
+        const socket = socketService.socket;
+        if (socket.connected) {
+            socket.emit("getUsersConnected");
+        } else {
+            socket.once("connect", () => {
+                socket.emit("getUsersConnected");
+            });
+        }
+        socket.once("getUsersConnected", (users: User[]) => {
+            userStore.dispatch({ type: UserActionType.GetUserList, payload: users });
+        });
     }
 
 }
