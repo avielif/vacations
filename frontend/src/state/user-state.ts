@@ -26,11 +26,13 @@ export function userReducer(userState: UserState = new UserState(), action: User
             newState.userList = action.payload;
             break;
         case UserActionType.AddUser:
-            newState.userList.push(action.payload);
+            // newState.userList.push(action.payload);
+            const alreadyExists = newState.userList.find(u => String(u.id) === String(action.payload.id));
+            if (!alreadyExists) newState.userList.push(action.payload);
             break;
         case UserActionType.RemoveUser:
-            const indexToDelete = newState.userList.findIndex((item) => item.id === action.payload);
-            newState.userList.splice(indexToDelete, 1);
+            const indexToDelete = newState.userList.findIndex(item => item.id === action.payload);
+            if (indexToDelete !== -1) newState.userList.splice(indexToDelete, 1);
             break;
     }
 

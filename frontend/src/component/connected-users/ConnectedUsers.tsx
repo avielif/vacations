@@ -4,6 +4,7 @@ import {User} from "../../models/user";
 import './ConnectedUsers.css'
 import {userSocketService} from "../../services/user-socket-service";
 import {socketService} from "../../services/socket-service";
+import {RoleId} from "../../models/enums";
 
 function ConnectedUsers(): JSX.Element {
 
@@ -32,12 +33,12 @@ function ConnectedUsers(): JSX.Element {
                     </tr>
                 </thead>
                 <tbody>
-                    {users.map((user, index) => (
+                    {[...users].sort((a, b) => a.id! - b.id!).map((user, index) => (
                         <tr key={user.email}>
                             <td>{index + 1}</td>
                             <td>{user.firstName} {user.lastName}</td>
                             <td>{user.email}</td>
-                            <td>{user.roleId}</td>
+                            <td>{user.roleId === RoleId.Admin ? "Admin" : user.roleId === RoleId.User ? "User" : null}</td>
                         </tr>
                     ))}
                 </tbody>

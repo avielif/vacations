@@ -29,13 +29,20 @@ class SocketService {
                 // this._socketServer.emit("disconnectUser", user);
                 // console.log("Disconnected");
                 if (user) {
-                    this._connectedUsers = this._connectedUsers.filter(u => u.id !== user.id);
+                    this._connectedUsers = this._connectedUsers.filter(u => String(u.id) !== String(user.id));
                 }
                 this._socketServer.emit("disconnectUser", user);
             });
 
             if (user) {
-                this._connectedUsers.push(user);
+                // if (!this._connectedUsers.find(u => u.id === user.id)) {
+                //     this._connectedUsers.push(user);
+                // }
+                // this._socketServer.to("Admin").emit("connectUser", user);
+                if (!this._connectedUsers.find(u => String(u.id) === String(user.id!))) {
+                    this._connectedUsers.push(user);
+                    this._socketServer.to("Admin").emit("connectUser", user);
+                }
             }
 
             socket.on("getUsersConnected", () => {

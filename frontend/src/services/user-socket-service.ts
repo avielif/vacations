@@ -11,7 +11,7 @@ class UserSocketService {
         })
 
         socketService.socket.on("disconnectUser", (user) => {
-            userStore.dispatch({type: UserActionType.RemoveUser, payload: user});
+            userStore.dispatch({type: UserActionType.RemoveUser, payload: user.id});
         })
     }
 

@@ -11,9 +11,8 @@ import {UserActionType, userStore} from "../state/user-state";
 export function useVacationSocket(): void {
 
     useEffect(() => {
-        // socketService.connect();
+        socketService.connect();
         const socket = socketService.socket;
-        // console.log("Socket connected:", socket.id, socket.connected);
         socket.on("connect", () => console.log("Socket connected:", socket.id));
         socket.on("connect_error", (err) => console.log("Socket error:", err.message));
 

@@ -23,7 +23,7 @@ class AuthService {
         const sql = "insert into user (firstName, lastName, email, password, roleId) values(?, ?, ?, ?, ?)"
         const result = await dal.execute(sql, [user.firstName, user.lastName, user.email, user.password, user.roleId]) as ResultSetHeader;
         user.id = result.insertId;
-        socketService.socketServer.to("Admin").emit("connectUser", user);
+        // socketService.socketServer.to("Admin").emit("connectUser", user);
         return secureService.generateToken(user);
     }
 
@@ -37,7 +37,7 @@ class AuthService {
         if (!user) throw new UnauthorizedError("Incorrect email or password");
         const isPasswordCorrect = await bcrypt.compare(userCredentials.password, user.password);
         if (!isPasswordCorrect) throw new UnauthorizedError("Incorrect email or password");
-        socketService.socketServer.to("Admin").emit("connectUser", user);
+        // socketService.socketServer.to("Admin").emit("connectUser", user);
         return secureService.generateToken(user);
     }
 
