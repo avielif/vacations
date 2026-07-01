@@ -1,14 +1,9 @@
 import {createStore} from "redux";
 import {Vacation} from "../models/vacation";
-import {vacationSocketService} from "../services/vacation-socket-service";
 
 export class VacationState {
     vacationList: Vacation[] = [];
     vacationCount: number = 0;
-
-    // constructor() {
-    //     vacationSocketService.vacationAdded();
-    // }
 }
 
 export enum VacationActionType{

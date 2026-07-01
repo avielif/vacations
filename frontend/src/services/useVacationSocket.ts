@@ -61,21 +61,7 @@ export function useVacationSocket(): void {
             });
         });
 
-        // userSocketService.usersConnected();
-
-        // socketService.socket.on("connectUser", (user) => {
-        //     userStore.dispatch({type: UserActionType.AddUser, payload: user});
-        // })
-        //
-        // socketService.socket.on("disconnectUser", (user) => {
-        //     userStore.dispatch({type: UserActionType.RemoveUser, payload: user});
-        // })
-        //
-        // socketService.socket.emit("getUsersConnected");
-
         return () => {
-            // socket.off("connectUser");
-            // socket.off("disconnectUser");
             socket.off("addedVacation");
             socket.off("updatedVacation");
             socket.off("deletedVacation");

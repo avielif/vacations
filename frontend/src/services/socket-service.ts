@@ -9,12 +9,6 @@ class SocketService {
     public connect(): void {
         if (!this._socket) {
             this._socket = io(appConfig.serverAddress, {
-                // query: {
-                //     firstName: authStore.getState().user?.firstName,
-                //     lastName: authStore.getState().user?.lastName,
-                //     email: authStore.getState().user?.email,
-                //     roleId: authStore.getState().user?.roleId,
-                // },
                 auth: {
                     token: authStore.getState().token,
                 }

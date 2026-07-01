@@ -9,7 +9,6 @@ import {RoleId} from "../../models/enums";
 function ConnectedUsers(): JSX.Element {
 
     const [users, setUsers] = useState<User[]>(userStore.getState().userList);
-    console.log(userStore.getState().userList);
 
     useEffect(() => {
         socketService.connect(); // ensure socket exists

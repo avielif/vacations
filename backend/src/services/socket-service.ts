@@ -1,7 +1,6 @@
 import { Server as HttpServer} from "http";
 import { Server as SocketServer } from "socket.io";
 import {secureService} from "./secure-service";
-import {RoleId, StatusCode} from "../models/enums";
 import {jwtDecode} from "jwt-decode";
 
 class SocketService {
@@ -13,11 +12,6 @@ class SocketService {
         const options = {cors: {origin: "*"}};
         this._socketServer = new SocketServer(httpServer, options);
         this._socketServer.on("connection", (socket) => {
-            // const firstName = socket.handshake.query.firstName as string;
-            // const lastName = socket.handshake.query.lastName as string;
-            // const email = socket.handshake.query.email as string;
-            // const roleId = socket.handshake.query.roleId as string;
-            // const role = +roleId === 2 ? "User" : +roleId === 1 ? "Admin" : "";
             const token = socket.handshake.auth.token;
             const user = token ? jwtDecode<{ user: any }>(token).user : null;
             if (secureService.validateAdmin(token)) {
@@ -26,8 +20,6 @@ class SocketService {
             console.log("Connection: " + socket.id);
 
             socket.on("disconnect", () => {
-                // this._socketServer.emit("disconnectUser", user);
-                // console.log("Disconnected");
                 if (user) {
                     this._connectedUsers = this._connectedUsers.filter(u => String(u.id) !== String(user.id));
                 }
@@ -35,10 +27,6 @@ class SocketService {
             });
 
             if (user) {
-                // if (!this._connectedUsers.find(u => u.id === user.id)) {
-                //     this._connectedUsers.push(user);
-                // }
-                // this._socketServer.to("Admin").emit("connectUser", user);
                 if (!this._connectedUsers.find(u => String(u.id) === String(user.id!))) {
                     this._connectedUsers.push(user);
                     this._socketServer.to("Admin").emit("connectUser", user);
@@ -48,17 +36,12 @@ class SocketService {
             socket.on("getUsersConnected", () => {
                 socket.emit("getUsersConnected", this._connectedUsers);
             });
-
         })
-
-
     }
 
     public get socketServer() {
         return this._socketServer;
     }
-
-
 
 }
 

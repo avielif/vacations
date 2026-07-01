@@ -4,9 +4,6 @@ import {appConfig} from "../utils/app-config";
 import {UserCredentials} from "../models/user-credentials";
 import {AuthActionType, authStore} from "../state/auth-state";
 import {RoleId} from "../models/enums";
-import {vacationSocketService} from "./vacation-socket-service";
-import {userSocketService} from "./user-socket-service";
-import {socketService} from "./socket-service";
 import {UserActionType, userStore} from "../state/user-state";
 
 class AuthService {
@@ -19,8 +16,6 @@ class AuthService {
 
             const registeredUser = authStore.getState().user!;
             userStore.dispatch({type: UserActionType.AddUser, payload: registeredUser});
-
-            // socketService.connect();
         }
         catch(err) {
             const myErr = err as AxiosError<{ error: string }>;
@@ -35,26 +30,12 @@ class AuthService {
 
             const user = authStore.getState().user!;
             userStore.dispatch({type: UserActionType.AddUser, payload: user});
-
-            // socketService.connect();
-            // vacationSocketService.vacationAdded();
-            // vacationSocketService.vacationDeleted();
-            // socketService.connect();         // reconnect socket after login
-            // userSocketService.usersConnected();
         }
         catch(err) {
             const myErr = err as AxiosError<{ error: string }>;
             throw new Error(myErr.response?.data?.error ?? "Login failed");
         }
     }
-
-    // public init(): void {
-    //     if (authStore.getState().token) {
-    //         vacationSocketService.vacationAdded();
-    //         vacationSocketService.vacationDeleted();
-    //         vacationSocketService.vacationUpdated();
-    //     }
-    // }
 
 }
 
