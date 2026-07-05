@@ -1,7 +1,6 @@
 import multer from "multer";
 import {ValidationError} from "../models/client-error";
 
-
 const storage = multer.diskStorage({
     destination: "uploads/",
     filename: (req, file, callback) => {

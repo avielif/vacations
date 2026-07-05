@@ -13,7 +13,7 @@ interface CountRow {
 
 class VacationService {
 
-    public async addVacation(vacation: Vacation): Promise<Vacation> {
+    public async addVacation(vacation: Vacation, adminId: number): Promise<Vacation> {
         vacation.validate();
         const sql = "insert into vacation (destination, description, startDate, endDate, price, imageName) values (?, ?, ?, ?, ?, ?)";
         const result = await dal.execute(sql, [vacation.destination, vacation.description, vacation.startDate, vacation.endDate, vacation.price, vacation.imageName]) as ResultSetHeader;
@@ -26,7 +26,7 @@ class VacationService {
             startDate: toDisplay(String(vacation.startDate)),
             endDate: toDisplay(String(vacation.endDate))
         } as unknown as Vacation;
-        vacationSocketService.sendVacation(vacationForSocket);
+        vacationSocketService.addVacation(vacationForSocket, adminId);
 
         return vacation;
     }
@@ -53,7 +53,7 @@ class VacationService {
         return result[0].numberOfVacations;
     }
 
-    public async updateVacation(id: number, vacation: Vacation): Promise<void> {
+    public async updateVacation(id: number, vacation: Vacation, adminId: number): Promise<void> {
         vacation.validate(true);
         // deleting existing image before update
         const rows = await dal.execute("select imageName from vacation where id = ?", [id]) as Vacation[];
@@ -81,14 +81,15 @@ class VacationService {
             startDate: toDisplay(String(vacation.startDate)),
             endDate: toDisplay(String(vacation.endDate))
         } as unknown as Vacation;
-        vacationSocketService.updateVacation(vacationForSocket);
+        vacationSocketService.updateVacation(vacationForSocket, adminId);
 
     }
 
     public async deleteVacation(id: number, adminId: number): Promise<void> {
         // deleting existing image before delete
-        const rows = await dal.execute("select imageName from vacation where id = ?", [id]) as Vacation[];
+        const rows = await dal.execute("select imageName, destination from vacation where id = ?", [id]) as Vacation[];
         const existingImageName = rows[0]?.imageName;
+        const destination = rows[0]?.destination;
         if (existingImageName) {
             const oldImagePath = path.join("uploads", existingImageName);
             if (fs.existsSync(oldImagePath)) {
@@ -101,7 +102,7 @@ class VacationService {
         if (result.affectedRows === 0) {
             throw new ResourceNotFound(id);
         }
-        vacationSocketService.deleteVacation(id, adminId);
+        vacationSocketService.deleteVacation(id, adminId, destination);
     }
 
     public async getFollowedVacationsListByUserId(userId: number, offset: number): Promise<Vacation[]> {

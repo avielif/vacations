@@ -4,10 +4,10 @@ import Routing from "./utils/Routing";
 import Header from "./component/layout/header/Header";
 import axios from "axios";
 import { authStore, AuthActionType } from "./state/auth-state";
-import {authService} from "./services/auth-service";
 import VacationPreview from "./component/vacation-preview/VacationPreview";
 import {socketService} from "./services/socket-service";
 import {userSocketService} from "./services/user-socket-service";
+import {vacationSocket} from "./services/vacation-socket-service";
 
 axios.interceptors.response.use(
     response => response,
@@ -31,6 +31,7 @@ function App() {
         if (authStore.getState().token) {
             socketService.connect();
             userSocketService.usersConnected();
+            vacationSocket.userVacationsSockets();
         }
 
         // Connect when user logs in
@@ -39,6 +40,7 @@ function App() {
             if (token && !socketService.socket) {
                 socketService.connect();
                 userSocketService.usersConnected();
+                vacationSocket.userVacationsSockets();
             }
             if (!token) {
                 socketService.disconnect();

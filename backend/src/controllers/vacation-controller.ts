@@ -27,10 +27,12 @@ class VacationController {
     }
 
     public async addVacation(request: Request, response: Response) {
+        const token = request.headers.authorization?.substring(7)!;
+        const adminId = secureService.getAdminId(token);
         const vacationJson = JSON.parse(request.body.vacation);
         const vacation: Vacation = new Vacation(vacationJson);
         vacation.imageName = request.file?.filename;
-        const vacationFromDB = await vacationService.addVacation(vacation);
+        const vacationFromDB = await vacationService.addVacation(vacation, adminId);
         response.status(StatusCode.Created).json(vacationFromDB);
     }
 
@@ -46,11 +48,13 @@ class VacationController {
     }
 
     public async updateVacation(request: Request, response: Response) {
+        const token = request.headers.authorization?.substring(7)!;
+        const adminId = secureService.getAdminId(token);
         const id = +request.params.id;
         const vacationJson = JSON.parse(request.body.vacation);
         const vacation: Vacation = new Vacation(vacationJson);
         vacation.imageName = request.file?.filename;
-        await vacationService.updateVacation(id, vacation);
+        await vacationService.updateVacation(id, vacation, adminId);
         response.json(vacation);
     }
 

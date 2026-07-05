@@ -1,6 +1,5 @@
 import React, {JSX} from "react";
 import "./Main.css"
-import VacationPreview from "../../vacation-preview/VacationPreview";
 
 function Main(): JSX.Element {
     return (

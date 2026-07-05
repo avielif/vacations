@@ -142,7 +142,6 @@ class VacationService {
         }
     }
 
-
     public async getActiveVacationsCount(): Promise<number> {
         try {
             const response = await axios.get<{count: number}>(appConfig.apiAddress + "vacations/active/count", {headers: {Authorization: "Bearer " + authStore.getState().token}});

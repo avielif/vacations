@@ -1,25 +1,23 @@
-import { useEffect } from "react";
+// import { useEffect } from "react";
 import Swal from "sweetalert2";
 import { socketService } from "./socket-service";
 import { Vacation } from "../models/vacation";
 import {PreviewActionType, previewStore} from "../state/vacation-preview-state";
-import { useNavigate } from "react-router-dom";
 import {authStore} from "../state/auth-state";
-import {userSocketService} from "./user-socket-service";
-import {UserActionType, userStore} from "../state/user-state";
 
-export function useVacationSocket(): void {
+class VacationSocket {
 
-    useEffect(() => {
+    public userVacationsSockets() {
         socketService.connect();
         const socket = socketService.socket;
         socket.on("connect", () => console.log("Socket connected:", socket.id));
         socket.on("connect_error", (err) => console.log("Socket error:", err.message));
 
-        socket.on("addedVacation", (vacation: Vacation) => {
+        socket.on("addedVacation", ({ vacation, adminId }: { vacation: Vacation, adminId: number }) => {
+            if (authStore.getState().user?.id === adminId) return;
             Swal.fire({
                 title: "New Vacation Added!",
-                text: `${vacation.destination} was just added.`,
+                text: `Vacation "${vacation.destination}" was just added.`,
                 icon: "success",
                 showConfirmButton: true,
                 confirmButtonText: "View Vacation",
@@ -33,10 +31,11 @@ export function useVacationSocket(): void {
             });
         });
 
-        socket.on("updatedVacation", (vacation: Vacation) => {
+        socket.on("updatedVacation", ({ vacation, adminId }: { vacation: Vacation, adminId: number }) => {
+            if (authStore.getState().user?.id === adminId) return;
             Swal.fire({
                 title: "Vacation Updated",
-                text: `${vacation.destination} was updated.`,
+                text: `Vacation "${vacation.destination}" was updated.`,
                 icon: "info",
                 showConfirmButton: true,
                 confirmButtonText: "View Changes",
@@ -50,21 +49,17 @@ export function useVacationSocket(): void {
             });
         });
 
-        socket.on("deletedVacation", ({ id, adminId }: { id: number, adminId: number }) => {
+        socket.on("deletedVacation", ({id, adminId, destination}: { id: number, adminId: number, destination: string }) => {
             if (authStore.getState().user?.id === adminId) return;
             Swal.fire({
                 title: "Vacation Removed",
-                text: "A vacation has been deleted.",
+                text: `Vacation "${destination}" has been removed.`,
                 icon: "warning",
                 confirmButtonText: "OK",
                 returnFocus: false,
             });
         });
-
-        return () => {
-            socket.off("addedVacation");
-            socket.off("updatedVacation");
-            socket.off("deletedVacation");
-        };
-    }, []);
+    }
 }
+
+export const vacationSocket = new VacationSocket();

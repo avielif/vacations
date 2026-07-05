@@ -4,21 +4,21 @@ import {socketService} from "./socket-service";
 
 class VacationSocketService {
 
-    public sendVacation(vacation: Vacation) {
+    public addVacation(vacation: Vacation, adminId: number) {
         if (socketService.socketServer) {
-            socketService.socketServer.emit("addedVacation", vacation);
+            socketService.socketServer.emit("addedVacation", { vacation, adminId });
         }
     }
 
-    public deleteVacation(id: number, adminId: number) {
+    public deleteVacation(id: number, adminId: number, destination: string) {
         if (socketService.socketServer) {
-            socketService.socketServer.emit("deletedVacation", { id, adminId });
+            socketService.socketServer.emit("deletedVacation", { id, adminId, destination });
         }
     }
 
-    public updateVacation(vacation: Vacation) {
+    public updateVacation(vacation: Vacation, adminId: number) {
         if (socketService.socketServer) {
-            socketService.socketServer.emit("updatedVacation", vacation);
+            socketService.socketServer.emit("updatedVacation", { vacation, adminId });
         }
     }
 
